@@ -1,7 +1,16 @@
+body {
+    font-family: Nunito, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
 #logo {
-    max-width: 100px;
-    max-height: 100px;
+    max-width: 80px;
+    max-height: 80px;
 }
 .bg-gray {
     background-color: rgb(243 244 246);
+}
+.text-gray {
+    color: rgb(243 244 246);
+}
+.fill-gray {
+    fill: gray;
 }
