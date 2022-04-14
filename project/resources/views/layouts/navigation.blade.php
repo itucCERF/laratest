@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-light navigation pt-1 pb-1 shadow-sm mb-2">
+<nav x-data="{ open: false }" class="bg-dark navigation pt-1 pb-1 mb-2">
     <!-- Primary Navigation Menu -->
     <div class="container">
         <div class="d-flex justify-content-between">
@@ -15,11 +15,17 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
+                        {{ __('Users') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('admin.roles.index')" :active="request()->routeIs('admin.roles.*')">
+                        {{ __('Roles') }}
+                    </x-nav-link>
                 </div>
             </div>
 
             <div class="dropdown">
-                <button class="d-flex align-items-center text-secondary bg-transparent border-0 dropdown-toggle" id="dropdownMenuNav" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button class="d-flex align-items-center text-light bg-transparent border-0 dropdown-toggle" id="dropdownMenuNav" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <div>{{ Auth::user()->name }}</div>
                     <div class="ms-1">
                         <svg class="fill-gray" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">

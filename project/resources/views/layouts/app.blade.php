@@ -25,7 +25,7 @@
             @include('layouts.navigation')
 
             <!-- Page Heading -->
-            <header class="bg-white mb-2">
+            <header class="bg-white mb-4 shadow-sm">
                 <div class="container">
                     {{ $header }}
                 </div>
