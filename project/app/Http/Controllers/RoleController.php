@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class RoleController extends Controller
 {
@@ -14,7 +15,9 @@ class RoleController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.role.index', [
+            'roles' => Role::paginate(15)
+        ]);
     }
 
     /**
@@ -24,7 +27,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.role.create'); 
     }
 
     /**
@@ -35,7 +38,11 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = Role::create([
+            'name' => $request->name,
+            'slug' => Str::slug($request->name, '_'),
+        ]);
+        return redirect()->back()->with('status', 'Role has been create successfully!');
     }
 
     /**
@@ -57,7 +64,7 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
-        //
+        return view('admin.role.edit', ['role' => $role]);
     }
 
     /**
@@ -69,7 +76,10 @@ class RoleController extends Controller
      */
     public function update(Request $request, Role $role)
     {
-        //
+        $role->name = $request->name;
+        $role->slug = Str::slug($request->name, '_');
+        $role->save();
+        return redirect()->route('admin.role.edit', $role)->with('status', 'Role has been update successfully!');
     }
 
     /**
@@ -80,6 +90,7 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
-        //
+        $role->delete();
+        return redirect()->route('admin.role.index', $role)->with('status', 'Role has been delete successfully!');
     }
 }

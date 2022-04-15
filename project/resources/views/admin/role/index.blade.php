@@ -1,48 +1,44 @@
 <x-app-layout>
-    @section('title', 'Users')
+    @section('title', 'Roles')
     <x-slot name="header">
         <h2 class="text-secondary">
-            {{ __('Users') }}
+            {{ __('Roles') }}
         </h2>
     </x-slot>
 
     <div class="container">
         <x-auth-session-status class="mb-3" :status="session('status')" />
         <div class="text-end mb-4">
-            <a href="{{ route('admin.users.create') }}" class="btn btn-sm btn-success">{{ __('New User') }}</a>
+            <a href="{{ route('admin.roles.create') }}" class="btn btn-sm btn-success">{{ __('New Role') }}</a>
         </div>
         <div class="table-responsive">
             <table class="table table-bordered table-stripped table-light table-hover">
                 <thead>
                     <tr>
                         <th class="text-center">{{ __('No') }}</th>
-                        <th>{{ __('User Name') }}</th>
-                        <th>{{ __('Email') }}</th>
-                        <th class="text-center">{{ __('Roles') }}</th>
-                        <th>{{ __('Address') }}</th>
+                        <th>{{ __('Role Name') }}</th>
+                        <th>{{ __('Slug') }}</th>
                         <th class="text-center">{{ __('Action') }}</th>
                     </tr>
                 </thead>
                 <tbody class="small">
-                    @if($users->count() > 0)
+                    @if($roles->count() > 0)
                         @php
-                            $current_page = $users->currentPage();
-                            $perpage = $users->perPage();
+                            $current_page = $roles->currentPage();
+                            $perpage = $roles->perPage();
                         @endphp
-                        @foreach($users as $user)                    
+                        @foreach($roles as $role)                    
                             <tr>
                                 <td class="text-center">{{ $perpage * ($current_page - 1) + $loop->iteration }}</td>
-                                <td>{{ $user->name }}</td>
-                                <td>{{ $user->email }}</td>
-                                <td class="text-center">{{ $user->roles() ? implode(', ', $user->roles()->pluck('name')->toArray()) : '' }}</td>
-                                <td>{{ $user->address }}</td>
+                                <td>{{ $role->name }}</td>
+                                <td>{{ $role->slug }}</td>
                                 <td class="d-flex align-item-center justify-content-center">
-                                    <a href="{{ route('admin.users.edit', $user) }}">
+                                    <a href="{{ route('admin.roles.edit', $role) }}">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
                                             <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
                                         </svg>
                                     </a>
-                                    <form action="{{ route('admin.users.destroy', $user) }}" method="post">
+                                    <form action="{{ route('admin.roles.destroy', $role) }}" method="post">
                                         @csrf
                                         @method('DELETE')
                                         <a href="#" class="ms-2" title="Delete" data-toggle="tooltip" onclick="this.closest('form').submit();return false;">
@@ -56,12 +52,12 @@
                         @endforeach
                     @else
                         <tr>
-                            <td colspan="6" class="text-center">{{ __('Don\'t have any users!') }}</td>
+                            <td colspan="6" class="text-center">{{ __('Don\'t have any roles!') }}</td>
                         </tr>
                     @endif
                 </tbody>
             </table>
-            {{ $users->links() }}
+            {{ $roles->links() }}
         </div>
     </div>
 </x-app-layout>

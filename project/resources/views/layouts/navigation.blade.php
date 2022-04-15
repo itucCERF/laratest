@@ -1,7 +1,7 @@
 <nav x-data="{ open: false }" class="bg-dark navigation pt-1 pb-1 mb-2">
     <!-- Primary Navigation Menu -->
     <div class="container">
-        <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-between align-items-center">
             <div class="d-flex align-items-center">
                 <!-- Logo -->
                 <div class="me-2">
