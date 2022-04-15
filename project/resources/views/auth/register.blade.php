@@ -45,6 +45,14 @@
                                 name="password_confirmation" required />
             </div>
 
+            <!-- Address -->
+            <div class="mt-3">
+                <x-label for="address" :value="__('Address')" />
+
+                <x-input id="address" class="mt-1" type="text" name="address" :value="old('address')" />
+            </div>
+
+
             <div class="d-flex align-items-center justify-content-end mt-3">
                 <a class="small text-secondary" href="{{ route('login') }}">
                     {{ __('Already registered?') }}
