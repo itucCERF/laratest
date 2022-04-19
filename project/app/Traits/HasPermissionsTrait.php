@@ -7,10 +7,10 @@ use App\Models\Role;
 
 trait HasPermissionsTrait {
 
-    public function givePermissionsTo(... $permissions) {
+    public function givePermissionsTo( ... $permissions ) {
 
         $permissions = $this->getAllPermissions($permissions);
-        if($permissions === null) {
+        if ($permissions === null) {
             return $this;
         }
         $this->permissions()->saveMany($permissions);
@@ -42,7 +42,7 @@ trait HasPermissionsTrait {
     public function hasPermissionThroughRole($permission) {
 
         foreach ($permission->roles as $role){
-            if($this->roles->contains($role)) {
+            if ($this->roles->contains($role)) {
                 return true;
             }
         }
@@ -63,13 +63,13 @@ trait HasPermissionsTrait {
 
     public function roles() {
 
-        return $this->belongsToMany(Role::class,'users_roles');
+        return $this->belongsToMany(Role::class, 'users_roles');
 
     }
 
     public function permissions() {
 
-        return $this->belongsToMany(Permission::class,'users_permissions');
+        return $this->belongsToMany(Permission::class, 'users_permissions');
 
     }
 
@@ -81,7 +81,7 @@ trait HasPermissionsTrait {
 
     protected function getAllPermissions(array $permissions) {
 
-        return Permission::whereIn('slug',$permissions)->get();
+        return Permission::whereIn('slug', $permissions)->get();
 
     }
 

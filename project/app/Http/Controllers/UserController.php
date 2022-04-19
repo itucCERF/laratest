@@ -18,7 +18,7 @@ class UserController extends Controller
     public function index()
     {
         return view('admin.user.index', [
-            'users' => User::paginate(15)
+            'users' => User::paginate(config('constant.common_values.paginate_default'))
         ]);
     }
 
@@ -42,7 +42,6 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        // dd($request->roles);
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,

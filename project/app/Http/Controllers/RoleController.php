@@ -16,7 +16,7 @@ class RoleController extends Controller
     public function index()
     {
         return view('admin.role.index', [
-            'roles' => Role::paginate(15)
+            'roles' => Role::paginate(config('constant.common_values.paginate_default'))
         ]);
     }
 
@@ -38,6 +38,9 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required|unique:roles|max:255',
+        ]);
         $user = Role::create([
             'name' => $request->name,
             'slug' => Str::slug($request->name, '_'),
@@ -76,6 +79,9 @@ class RoleController extends Controller
      */
     public function update(Request $request, Role $role)
     {
+        $request->validate([
+            'name' => 'required|max:255|unique:roles,name'.$role->id,
+        ]);
         $role->name = $request->name;
         $role->slug = Str::slug($request->name, '_');
         $role->save();
