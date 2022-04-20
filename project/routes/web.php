@@ -25,11 +25,6 @@ Route::get('/dashboard', function () {
 
 Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
     Route::resource('users', UserController::class);
-    // Route::name('admin.')->group(function () {
-    //     Route::get('/users', function () {
-    //         // Route assigned name "admin.users"...
-    //     })->name('users');
-    // });
     Route::resource('roles', RoleController::class);
 });
 
