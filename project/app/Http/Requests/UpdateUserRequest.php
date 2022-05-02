@@ -26,14 +26,13 @@ class UpdateUserRequest extends FormRequest
     public function rules()
     {
         // dd($this->request->get('new_password'));
-        if ($this->request->get('new_password') != null)
-        {
+        if ($this->request->get('new_password') != null) {
             return [
                 'name' => ['required', 'string', 'max:255'],
                 'new_password' => ['required', 'confirmed', Rules\Password::defaults()],
                 'address' => ['max:255'],
             ];
-        }else{
+        } else {
             return [
                 'name' => ['required', 'string', 'max:255'],
                 'address' => ['max:255'],

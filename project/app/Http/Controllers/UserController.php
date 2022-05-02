@@ -88,13 +88,13 @@ class UserController extends Controller
     {
         $user->name = $request->name;
         $user->address = $request->address;
-        if($request->new_password != null)
-        {
+        if ($request->new_password != null) {
             $user->password = Hash::make($request->new_password);
         }
         $user->save();
         $user->roles()->sync($request->roles);
-        return redirect()->route('admin.users.edit', $user)->with('status', 'User has been update successfully!');
+        return redirect()->route('admin.users.edit', $user)
+            ->with('status', 'User has been update successfully!');
     }
 
     /**
