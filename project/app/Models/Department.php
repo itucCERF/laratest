@@ -20,4 +20,12 @@ class Department extends Model
         'address',
         'description',
     ];
+
+    /**
+     * Get all Transitions of the Department.
+     */
+    public function transitions()
+    {
+        return $this->hasMany(Transition::class);
+    }
 }
