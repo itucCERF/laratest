@@ -1,29 +1,11 @@
-<nav x-data="{ open: false }" class="bg-dark navigation pt-1 pb-1 mb-2">
-    <!-- Primary Navigation Menu -->
-    <div class="container">
+<nav x-data="{ open: false }" class="bg-dark navigation pt-1 pb-1">
+    <div class="ps-3 pe-3">
         <div class="d-flex justify-content-between align-items-center">
-            <div class="d-flex align-items-center">
-                <!-- Logo -->
-                <div class="me-2">
-                    <a href="{{ route('dashboard') }}">
-                        <x-application-logo id="nav-logo" />
-                    </a>
-                </div>
-
-                <!-- Navigation Links -->
-                <div>
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
-                        {{ __('Users') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('admin.roles.index')" :active="request()->routeIs('admin.roles.*')">
-                        {{ __('Roles') }}
-                    </x-nav-link>
-                </div>
-            </div>
-
+            <!-- Logo -->
+            <a href="{{ route('dashboard') }}" class="text-decoration-none text-light">
+                <x-application-logo id="nav-logo" />
+                {{ config('app.name', 'Laravel') }}
+            </a>
             <div class="dropdown">
                 <button class="d-flex align-items-center text-light bg-transparent border-0 dropdown-toggle" id="dropdownMenuNav" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <div>{{ Auth::user()->name }}</div>
@@ -37,7 +19,6 @@ dd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4
                     <div class="dropdown-item">
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
-
                             <x-dropdown-link :href="route('logout')"
                                     onclick="event.preventDefault();
                                                 this.closest('form').submit();">

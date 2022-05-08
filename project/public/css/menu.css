@@ -1,0 +1,30 @@
+ul#main-menu, ul#main-menu .sub-menu {
+    list-style-type: none;
+    padding-left: 0;
+}
+ul#main-menu li {
+    display: block;
+    padding-bottom: 8px;
+}
+ul#main-menu a {
+    text-decoration: none;
+    color: #f8f9fa;
+    font-size: 15px;
+}
+ul#main-menu li:hover > a, ul#main-menu a.active {
+    color: #0dcaf0;
+    font-weight: bold;
+    -webkit-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
+ul#main-menu .menu-item.has-sub > a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+ul#main-menu .sub-menu {
+    padding-left: 15px;
+    padding-top: 10px;
+    display: none;
+}

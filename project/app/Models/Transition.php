@@ -22,4 +22,20 @@ class Transition extends Model
         'start_date',
         'end_date',
     ];
+
+    /**
+     * Get the Department of the Transition.
+     */
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
+    }
+
+    /**
+     * Get the Member of the Transition.
+     */
+    public function member()
+    {
+        return $this->belongsTo(Member::class);
+    }
 }

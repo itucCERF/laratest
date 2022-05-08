@@ -25,4 +25,12 @@ class Member extends Model
         'id_card',
         'notes',
     ];
+
+    /**
+     * Get all Transitions of the Member.
+     */
+    public function transitions()
+    {
+        return $this->hasMany(Transition::class);
+    }
 }
