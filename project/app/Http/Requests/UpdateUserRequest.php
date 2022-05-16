@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules;
 
 class UpdateUserRequest extends FormRequest
@@ -25,7 +24,6 @@ class UpdateUserRequest extends FormRequest
      */
     public function rules()
     {
-        // dd($this->request->get('new_password'));
         if ($this->request->get('new_password') != null) {
             return [
                 'name' => ['required', 'string', 'max:255'],

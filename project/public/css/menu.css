@@ -11,7 +11,7 @@ ul#main-menu a {
     color: #f8f9fa;
     font-size: 15px;
 }
-ul#main-menu li:hover > a, ul#main-menu a.active {
+ul#main-menu li:hover > a, ul#main-menu a.active, ul#main-menu li.active > a {
     color: #0dcaf0;
     font-weight: bold;
     -webkit-transition: all 0.2s ease-in-out;

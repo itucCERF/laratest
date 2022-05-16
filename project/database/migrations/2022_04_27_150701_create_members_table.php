@@ -17,7 +17,7 @@ class CreateMembersTable extends Migration
             $table->id();
             $table->char('name', 255);
             $table->enum('gender', ['1', '2', '0']);
-            $table->timestamp('email')->unique();
+            $table->string('email')->unique();
             $table->timestamp('birthday')->nullable();
             $table->string('address')->nullale();
             $table->string('profile')->nullale();
