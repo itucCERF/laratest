@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\MemberController;
+use App\Http\Controllers\TransitionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +29,9 @@ Route::get('/dashboard', function () {
 Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
     Route::resource('users', UserController::class);
     Route::resource('roles', RoleController::class);
+    Route::resource('departments', DepartmentController::class);
+    Route::resource('members', MemberController::class);
+    Route::resource('transitions', TransitionController::class);
 });
 
 require __DIR__.'/auth.php';
