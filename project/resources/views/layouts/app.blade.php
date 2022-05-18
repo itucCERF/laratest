@@ -21,6 +21,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
         <link rel="stylesheet" href="{{ asset('css/menu.css') }}">
+        @yield('custom_css')
 
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>
@@ -28,6 +29,7 @@
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" ></script>
         <script src="{{ asset('js/bootstrap.min.js') }}" defer></script>
         <script src="{{ asset('js/menu.js') }}"></script>
+        @yield('custom_js')
     </head>
     <body class="text-dark">
         <!-- Page Header -->

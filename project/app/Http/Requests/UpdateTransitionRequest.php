@@ -26,8 +26,7 @@ class UpdateTransitionRequest extends FormRequest
         return [
             'member_id' => ['required', 'string', 'exists:members,id'],
             'department_id' => ['required', 'string', 'exists:departments,id'],
-            'user_id' => ['required', 'string', 'exists:users,id'],
-            'decided_img' => ['string', 'max:255', 'nullable'],
+            'decided_img' => ['image', 'max:200', 'nullable'],
             'start_date' => ['required', 'date'],
             'end_date' => ['date', 'after:start_date', 'nullable'],
         ];

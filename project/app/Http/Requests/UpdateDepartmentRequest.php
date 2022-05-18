@@ -25,7 +25,7 @@ class UpdateDepartmentRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'string', 'max:255', Rule::unique('departments')->ignore($this->name)],
+            'name' => ['required', 'string', 'max:255', Rule::unique('departments')->ignore($this->department->id)],
             'address' => ['string', 'max:255', 'nullable'],
             'description' => ['string', 'nullable'],
         ];

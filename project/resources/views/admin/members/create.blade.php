@@ -1,4 +1,7 @@
 <x-app-layout>
+    @section('custom_css')
+        <link rel="stylesheet" href="{{ asset('css/media.css') }}">
+    @endsection
     @section('title', 'Create Member')
     <x-slot name="header">
         <h2 class="text-secondary">
@@ -15,15 +18,15 @@
                 {{ __('All members') }}
             </a>
         </div>
-        <form action="{{ route('admin.members.store') }}" method="POST">
+        <form action="{{ route('admin.members.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <x-auth-session-status class="mb-3" :status="session('status')" />
             <x-auth-validation-errors class="mb-3" :errors="$errors" />
-            <div class="mb-2">
+            <div class="mb-3">
                 <x-label for="name" :value="__('Name')" />
                 <x-input id="name" class="mt-1" type="text" name="name" :value="old('name')" required autofocus />
             </div>
-            <div class="mb-2">
+            <div class="mb-3">
                 <x-label for="email" :value="__('Email')" />
                 <x-input id="email" class="mt-1" type="email" name="email" :value="old('email')" />
             </div>
@@ -41,19 +44,23 @@
                     <x-input id="birthday" class="mt-1" type="date" name="birthday" :value="old('birthday')" />
                 </div>
             </div>
-            <div class="mb-2">
+            <div class="mb-3">
                 <x-label for="profile" :value="__('Profile')" />
-                <x-input id="profile" class="mt-1" type="text" name="profile" :value="old('profile')" />
+                <div class="upload_media">
+                    <x-input id="profile" class="mt-1" type="file" name="profile"
+                    accept="image/gif, image/png, image/jpeg" onchange="readURL(this);" />
+                    <img id="show_image" src="{{ asset('images/no_image.jpg') }}" alt="{{ __('Your Image') }}" />
+                </div>
             </div>
-            <div class="mb-2">
+            <div class="mb-3">
                 <x-label for="address" :value="__('Address')" />
                 <x-input id="address" class="mt-1" type="text" name="address" :value="old('address')" />
             </div>
-            <div class="mb-2">
+            <div class="mb-3">
                 <x-label for="id_card" :value="__('ID Card')" />
                 <x-input id="id_card" class="mt-1" type="text" name="id_card" :value="old('id_card')" />
             </div>
-            <div class="mb-2">
+            <div class="mb-3">
                 <x-label for="notes" :value="__('Notes')" />
                 <textarea name="notes" id="notes" cols="30" rows="5" class="form-control">{{ old('notes') }}</textarea>
             </div>
@@ -63,4 +70,7 @@
             </div>
         </form>
     </div>
+    @section('custom_js')
+        <script src="{{ asset('js/media.js') }}" defer></script>
+    @endsection
 </x-app-layout>

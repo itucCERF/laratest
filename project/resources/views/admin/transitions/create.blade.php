@@ -1,5 +1,8 @@
 <x-app-layout>
     @section('title', 'Create Transition')
+    @section('custom_css')
+        <link rel="stylesheet" href="{{ asset('css/media.css') }}">
+    @endsection
     <x-slot name="header">
         <h2 class="text-secondary">
             {{ __('Create Transition') }}
@@ -13,14 +16,14 @@
                 {{ __('All Transitions') }}
             </a>
         </div>
-        <form action="{{ route('admin.transitions.store') }}" method="POST">
+        <form action="{{ route('admin.transitions.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <x-auth-session-status class="mb-3" :status="session('status')" />
             <x-auth-validation-errors class="mb-3" :errors="$errors" />
-            <div class="row mb-2">
+            <div class="row mb-3">
                 <div class="col-sm-6">
                     <x-label for="member" :value="__('Member')" />
-                    <select id="member" class="mt-1 form-control" name="member">
+                    <select id="member" class="mt-1 form-control" name="member_id">
                         @foreach ($members as $key => $value)
                             <option value="{{ $key }}">{{ $value }}</option>
                         @endforeach
@@ -28,14 +31,14 @@
                 </div>
                 <div class="col-sm-6">
                     <x-label for="department" :value="__('Department')" />
-                    <select id="department" class="mt-1 form-control" name="department">
+                    <select id="department" class="mt-1 form-control" name="department_id">
                         @foreach ($departments as $key => $value)
                             <option value="{{ $key }}">{{ $value }}</option>
                         @endforeach
                     </select>
                 </div>
             </div>
-            <div class="row mb-2">
+            <div class="row mb-3">
                 <div class="col-sm-6">
                     <x-label for="start_date" :value="__('Start Date')" />
                     <x-input id="start_date" class="mt-1" type="date" name="start_date" :value="old('start_date')" />
@@ -45,9 +48,13 @@
                     <x-input id="end_date" class="mt-1" type="date" name="end_date" :value="old('end_date')" />
                 </div>
             </div>
-            <div class="mb-2">
+            <div class="mb-3">
                 <x-label for="decide" :value="__('Decide Image')" />
-                <x-input id="decide" class="mt-1" type="text" name="decided_img" :value="old('decided_img')" />
+                <div class="upload_media">
+                    <x-input id="profile" class="mt-1" type="file" name="decided_img"
+                    accept="image/gif, image/png, image/jpeg" onchange="readURL(this);" />
+                    <img id="show_image" src="{{ asset('images/no_image.jpg') }}" alt="{{ __('Your Image') }}" />
+                </div>
             </div>
             <div class="text-end">
                 <a href="{{ route('admin.transitions.index') }}" class="btn btn-secondary">{{ __('Cancel') }}</a>
@@ -55,4 +62,7 @@
             </div>
         </form>
     </div>
+    @section('custom_js')
+        <script src="{{ asset('js/media.js') }}" defer></script>
+    @endsection
 </x-app-layout>
