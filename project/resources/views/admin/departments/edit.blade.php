@@ -18,15 +18,15 @@
             {{ method_field('PUT') }}
             <x-auth-session-status class="mb-3" :status="session('status')" />
             <x-auth-validation-errors class="mb-3" :errors="$errors" />
-            <div class="mb-2">
+            <div class="mb-3">
                 <x-label for="name" :value="__('Name')" />
                 <x-input id="name" class="mt-1" type="text" name="name" :value="$department->name" required autofocus />
             </div>
-            <div class="mb-2">
+            <div class="mb-3">
                 <x-label for="address" :value="__('Address')" />
                 <x-input id="address" class="mt-1" type="text" name="address" :value="$department->address" />
             </div>
-            <div class="mb-2">
+            <div class="mb-3">
                 <x-label for="description" :value="__('Description')" />
                 <textarea name="description" id="description" rows="5" class="mt-1 form-control">{{ $department->description }}</textarea>
             </div>

@@ -29,7 +29,7 @@ class StoreMemberRequest extends FormRequest
             'email' => ['required', 'string', 'email', 'max:255', 'unique:members'],
             'birthday' => ['date', 'nullable'],
             'address' => ['string', 'max:255', 'nullable'],
-            'profile' => ['string', 'max:255', 'nullable'],
+            'profile' => ['image', 'max:200', 'nullable'],
             'id_card' => ['string', 'max:255', 'nullable'],
         ];
     }

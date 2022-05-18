@@ -19,8 +19,8 @@ class CreateTransitionsTable extends Migration
             $table->unsignedBigInteger('department_id')->unsigned();
             $table->unsignedBigInteger('user_id')->unsigned()->nullable();
             $table->string('decided_img')->nullale();
-            $table->timestamp('start_date');
-            $table->timestamp('end_date')->nullable();
+            $table->date('start_date');
+            $table->date('end_date')->nullable();
             $table->foreign('member_id','fk_transitions_member_id')->references('id')
                     ->on('members')->onUpdate('RESTRICT')->onDelete('CASCADE');
             $table->foreign('department_id','fk_transitions_department_id')->references('id')

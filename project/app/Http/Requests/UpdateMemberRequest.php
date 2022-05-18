@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateMemberRequest extends FormRequest
 {
@@ -26,10 +27,10 @@ class UpdateMemberRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'gender' => ['required'],
-            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('members')->ignore($this->email)],
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('members')->ignore($this->member->id)],
             'birthday' => ['date', 'nullable'],
             'address' => ['string', 'max:255', 'nullable'],
-            'profile' => ['string', 'max:255', 'nullable'],
+            'profile' => ['image', 'max:200', 'nullable'],
             'id_card' => ['string', 'max:255', 'nullable'],
         ];
     }

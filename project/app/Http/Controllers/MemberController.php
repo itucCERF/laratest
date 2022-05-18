@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Member;
+use App\Traits\Media;
 use App\Http\Requests\StoreMemberRequest;
 use App\Http\Requests\UpdateMemberRequest;
 
 class MemberController extends Controller
 {
+    use Media;
+
     /**
      * Display a listing of the resource.
      *
@@ -38,17 +41,21 @@ class MemberController extends Controller
      */
     public function store(StoreMemberRequest $request)
     {
+        $url_profile = '';
+        if ($file = $request->file('profile')) {
+            $url_profile = $this->saveFile($file);
+        }
         $member = Member::create([
             'name' => $request->name,
             'gender' => $request->gender,
             'email' => $request->email,
             'birthday' => $request->birthday,
             'address' => $request->address,
-            'profile' => $request->profile,
+            'profile' => $url_profile,
             'id_card' => $request->id_card,
             'notes' => $request->notes,
         ]);
-        return redirect()->back()->with('status', 'Member has been create successfully!');
+        return redirect()->back()->with('status', 'Member has been created successfully!');
     }
 
     /**
@@ -89,12 +96,19 @@ class MemberController extends Controller
         $member->email = $request->email;
         $member->birthday = $request->birthday;
         $member->address = $request->address;
-        $member->profile = $request->profile;
         $member->id_card = $request->id_card;
         $member->notes = $request->notes;
-        $member->save();
-        return redirect()->route('admin.members.edit', $member)
-            ->with('status', 'Member has been update successfully!');
+        if ($file = $request->file('profile')) {
+            $this->deleteOldFile($member->profile);
+            $member->profile = $this->saveFile($file);
+        }
+        if($member->isDirty()){
+            $member->save();
+            return redirect()->route('admin.members.edit', $member)
+                ->with('status', 'Member has been updated successfully!');
+        } else {
+            return redirect()->route('admin.members.edit', $member);
+        }
     }
 
     /**
@@ -107,6 +121,6 @@ class MemberController extends Controller
     {
         $member->delete();
         return redirect()->route('admin.members.index', $member)
-            ->with('status', 'Member has been delete successfully!');
+            ->with('status', 'Member has been deleted successfully!');
     }
 }

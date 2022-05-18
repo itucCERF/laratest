@@ -3,11 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Transition;
+use App\Traits\Media;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreTransitionRequest;
 use App\Http\Requests\UpdateTransitionRequest;
 
 class TransitionController extends Controller
 {
+    use Media;
+
     /**
      * Display a listing of the resource.
      *
@@ -38,11 +42,15 @@ class TransitionController extends Controller
      */
     public function store(StoreTransitionRequest $request)
     {
+        $url_profile = '';
+        if ($file = $request->file('decided_img')) {
+            $url_profile = $this->saveFile($file);
+        }
         $transition = Transition::create([
             'member_id' => $request->member_id,
             'department_id' => $request->department_id,
-            'user_id' => $request->user_id,
-            'decided_img' => $request->decided_img,
+            'user_id' => Auth::id(),
+            'decided_img' => $url_profile,
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
         ]);
@@ -82,15 +90,22 @@ class TransitionController extends Controller
      */
     public function update(UpdateTransitionRequest $request, Transition $transition)
     {
-        $member->member_id = $request->member_id;
-        $member->department_id = $request->department_id;
-        $member->user_id = $request->user_id;
-        $member->decided_img = $request->decided_img;
-        $member->start_date = $request->start_date;
-        $member->end_date = $request->end_date;
-        $member->save();
-        return redirect()->route('admin.transitions.edit', $member)
-            ->with('status', 'Transition has been update successfully!');
+        $transition->member_id = $request->member_id;
+        $transition->department_id = $request->department_id;
+        $transition->user_id = Auth::id();
+        $transition->start_date = $request->start_date;
+        $transition->end_date = $request->end_date;
+        if ($file = $request->file('decided_img')) {
+            $this->deleteOldFile($transition->decided_img);
+            $transition->decided_img = $this->saveFile($file);
+        }
+        if($transition->isDirty()){
+            $transition->save();
+            return redirect()->route('admin.transitions.edit', $transition)
+                ->with('status', 'Transition has been update successfully!');
+        } else {
+            return redirect()->route('admin.transitions.edit', $transition);
+        }
     }
 
     /**
@@ -102,7 +117,7 @@ class TransitionController extends Controller
     public function destroy(Transition $transition)
     {
         $transition->delete();
-        return redirect()->route('admin.transitions.index', $member)
+        return redirect()->route('admin.transitions.index', $transition)
             ->with('status', 'Transition has been delete successfully!');
     }
 }
