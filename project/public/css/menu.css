@@ -4,7 +4,7 @@ ul#main-menu, ul#main-menu .sub-menu {
 }
 ul#main-menu li {
     display: block;
-    padding-bottom: 8px;
+    padding: 5px 0;
 }
 ul#main-menu a {
     text-decoration: none;
@@ -24,7 +24,7 @@ ul#main-menu .menu-item.has-sub > a {
     justify-content: space-between;
 }
 ul#main-menu .sub-menu {
-    padding-left: 15px;
+    padding-left: 35px;
     padding-top: 10px;
     display: none;
 }

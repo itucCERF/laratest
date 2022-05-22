@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 namespace App\Traits;
 
 use Carbon\Carbon;
@@ -10,19 +11,18 @@ use Illuminate\Support\Facades\Storage;
 trait Media
 {
     /**
+     * Uplaod Path of media
+     *
      * @var string
      */
     public $uploadPath = "uploads";
 
     /**
-     * @var
-     */
-    public $folderName;
-
-    /**
+     * Folder name of media by year and month
+     *
      * @var string
      */
-    public $rule = 'image|max:200';
+    public $folderName;
 
     /**
      * Set options.
@@ -36,6 +36,8 @@ trait Media
     }
 
     /**
+     * Create folder upload if not exists
+     *
      * @return bool
      */
     private function createUploadFolder(): bool
@@ -51,29 +53,9 @@ trait Media
     }
 
     /**
-     * For handle validation file action
-     *
-     * @param $file
-     * @return Media|\Illuminate\Http\RedirectResponse
-     */
-    private function validateFileAction($file)
-    {
-        $rules = array('fileupload' => $this->rule);
-        $file = array('fileupload' => $file);
-        $fileValidator = Validator::make($file, $rules);
-
-        if ($fileValidator->fails()) {
-            $messages = $fileValidator->messages();
-
-            return redirect()->back()->withInput(request()->all())
-                ->withErrors($messages);
-        }
-    }
-
-    /**
      * For Handle Put File
      *
-     * @param $file
+     * @param $file from request
      * @return string
      */
     public function putFile($file)
@@ -93,15 +75,14 @@ trait Media
     /**
      * For Handle Save File Process
      *
-     * @param $file
-     * @return $data
+     * @param $file from request
+     * @return string
      */
     public function saveFile($file)
     {
         $data = '';
         if ($file) {
             $this->setFolderName();
-            $this->validateFileAction($file);
             $this->createUploadFolder();
             $data = $this->putFile($file);
         }
@@ -112,8 +93,8 @@ trait Media
     /**
      * For Handle Delete Old File
      *
-     * @param $file
-     *@return bool
+     * @param $file from request
+     * @return bool
      */
     public function deleteOldFile($file)
     {

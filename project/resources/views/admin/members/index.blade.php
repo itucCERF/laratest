@@ -17,6 +17,7 @@
                     <tr>
                         <th class="text-center">{{ __('No') }}</th>
                         <th>{{ __('Member Name') }}</th>
+                        <th>{{ __('Current Department') }}</th>
                         <th>{{ __('Email') }}</th>
                         <th>{{ __('Address') }}</th>
                         <th>{{ __('ID Card') }}</th>
@@ -33,6 +34,7 @@
                             <tr>
                                 <td class="text-center">{{ $perpage * ($current_page - 1) + $loop->iteration }}</td>
                                 <td>{{ $member->name }}</td>
+                                <td>{{ $member->currentDepartment() ? $member->currentDepartment()->name : '' }}</td>
                                 <td>{{ $member->email }}</td>
                                 <td>{{ $member->address }}</td>
                                 <td>{{ $member->id_card }}</td>

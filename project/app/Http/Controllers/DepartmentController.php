@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Department;
 use App\Http\Requests\StoreDepartmentRequest;
 use App\Http\Requests\UpdateDepartmentRequest;
+use Carbon\Carbon;
 
 class DepartmentController extends Controller
 {
@@ -15,8 +16,16 @@ class DepartmentController extends Controller
      */
     public function index()
     {
+        $departments = Department::withCount(['transitions' => function ($query) {
+            $query->whereDate('start_date', '<=', Carbon::today())
+                ->where(function ($query1) {
+                    $query1->whereDate('end_date', '>=', Carbon::today())
+                        ->orWhereNull('end_date');
+                });
+        }])
+            ->paginate(config('constant.common_values.paginate_default'));
         return view('admin.departments.index', [
-            'departments' => Department::paginate(config('constant.common_values.paginate_default'))
+            'departments' => $departments
         ]);
     }
 
