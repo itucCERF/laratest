@@ -6,10 +6,14 @@ use App\Models\Member;
 use App\Traits\Media;
 use App\Http\Requests\StoreMemberRequest;
 use App\Http\Requests\UpdateMemberRequest;
+use App\Traits\CsvTrait;
+use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 class MemberController extends Controller
 {
-    use Media;
+    use Media,
+        CsvTrait;
 
     /**
      * Display a listing of the resource.
@@ -124,5 +128,33 @@ class MemberController extends Controller
         $member->delete();
         return redirect()->route('admin.members.index', $member)
             ->with('status', 'Member has been deleted successfully!');
+    }
+
+    /**
+     * Display a listing of transition histories of Member.
+     *
+     * @param  \App\Models\Member  $member
+     */
+    public function history(Member $member)
+    {
+        $transitions = $member->transitions()
+            ->orderBy('start_date', 'asc')
+            ->paginate(config('constant.common_values.paginate_default'));
+        return view('admin.members.history', [
+            'member' => $member,
+            'transitions' => $transitions,
+        ]);
+    }
+
+    /**
+     * Export listing of transition histories of Member.
+     *
+     * @param  \App\Models\Member $member
+     */
+    public function export(Member $member)
+    {
+        $transitions = $member->getHistory()->toArray();
+        $filename = Str::slug($member->name, '-') . "-history_" . time() . ".csv";
+        return $this->exportCsv($transitions, $filename);
     }
 }

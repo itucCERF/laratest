@@ -3,7 +3,6 @@
 namespace App\Traits;
 
 use App\Models\Transition;
-use App\Models\Department;
 use App\Models\Member;
 use Carbon\Carbon;
 
@@ -14,11 +13,17 @@ trait DepartmentTrait
      *
      * @return $members
      */
-    public function allCurrentMembers()
+    public function allCurrentMembers(int $paginate = null)
     {
+        $model = new Member();
         $currentTransitions = $this->allCurrentTransitions();
-        return Member::whereIn('id', $currentTransitions->pluck('member_id')->toArray())
-            ->get();
+        $members = Member::select($model->getFillable())
+            ->whereIn('id', $currentTransitions->pluck('member_id')->toArray());
+        if ($paginate == null) {
+            return $members->get();
+        } else {
+            return $members->paginate($paginate);
+        }
     }
 
     /**

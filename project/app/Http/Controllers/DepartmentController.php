@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Department;
+use App\Traits\CsvTrait;
 use App\Http\Requests\StoreDepartmentRequest;
 use App\Http\Requests\UpdateDepartmentRequest;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 class DepartmentController extends Controller
 {
+    use CsvTrait;
     /**
      * Display a listing of the resource.
      *
@@ -107,5 +110,30 @@ class DepartmentController extends Controller
         $department->delete();
         return redirect()->route('admin.departments.index', $department)
             ->with('status', 'Department has been delete successfully!');
+    }
+
+    /**
+     * Display a listing of members of Department.
+     *
+     * @param  \App\Models\Department  $department
+     */
+    public function allMember(Department $department)
+    {
+        return view('admin.departments.members', [
+            'department' => $department,
+            'members' => $department->allCurrentMembers(config('constant.common_values.paginate_default')),
+        ]);
+    }
+
+    /**
+     * Export listing of members of Department.
+     *
+     * @param  \App\Models\Department  $department
+     */
+    public function export(Department $department)
+    {
+        $members = $department->allCurrentMembers()->toArray();
+        $filename = Str::slug($department->name, '-') . "-members_" . time() . ".csv";
+        return $this->exportCsv($members, $filename);
     }
 }

@@ -32,6 +32,14 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::resource('departments', DepartmentController::class);
     Route::resource('members', MemberController::class);
     Route::resource('transitions', TransitionController::class);
+    Route::get('departments/{department}/all-members', [DepartmentController::class, 'allMember'])
+        ->name('departments.all_members');
+    Route::get('departments/{department}/export-csv', [DepartmentController::class, 'export'])
+        ->name('departments.export_csv');
+    Route::get('members/{member}/transition-history', [MemberController::class, 'history'])
+        ->name('members.history');
+    Route::get('members/{member}/export-csv', [MemberController::class, 'export'])
+        ->name('members.export_csv');
 });
 
 require __DIR__.'/auth.php';
