@@ -5,7 +5,7 @@
         </x-nav-link>
     </li>
     <li class="menu-item has-sub {{ request()->routeIs('admin.departments.*') ? 'active' : ''}}">
-        <a href="#" onclick="toggleSubmenu(this)">
+        <a href="#" onclick="toggleSubMenu(this)">
             <span>
                 <i class="bi bi-building me-1"></i>
                 {{ __('Departments') }}
@@ -26,7 +26,7 @@
         </ul>
     </li>
     <li class="menu-item has-sub {{ request()->routeIs('admin.members.*') ? 'active' : ''}}">
-        <a href="#" onclick="toggleSubmenu(this)">
+        <a href="#" onclick="toggleSubMenu(this)">
             <span>
                 <i class="bi bi-people me-1"></i>
                 {{ __('Members') }}
@@ -47,7 +47,7 @@
         </ul>
     </li>
     <li class="menu-item has-sub {{ request()->routeIs('admin.transitions.*') ? 'active' : ''}}">
-        <a href="#" onclick="toggleSubmenu(this)">
+        <a href="#" onclick="toggleSubMenu(this)">
             <span>
                 <i class="bi bi-arrow-left-right me-1"></i>
                 {{ __('Transitions') }}
@@ -91,3 +91,8 @@
         </form>
     </li>
 </ul>
+<div class="icon-menu-mobile">
+    <a onclick="toggleMenu(this)">
+        <i class="bi bi-bar-chart-steps"></i>
+    </a>
+</div>
