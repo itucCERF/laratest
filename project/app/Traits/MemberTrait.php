@@ -33,4 +33,19 @@ trait MemberTrait
     {
         return $this->currentTransition() ? $this->currentTransition()->department : '';
     }
+
+    /**
+     * For Handle get Transition histories of Member
+     *
+     * @return $histories
+     */
+    public function getHistory()
+    {
+        $histories = Transition::select('departments.name', 'transitions.start_date', 'transitions.end_date')
+            ->join('departments', 'transitions.department_id', 'departments.id')
+            ->where('transitions.member_id', $this->id)
+            ->orderBy('start_date', 'asc')
+            ->get();
+        return $histories;
+    }
 }
