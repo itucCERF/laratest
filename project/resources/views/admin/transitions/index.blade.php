@@ -18,6 +18,8 @@
                         <th class="text-center">{{ __('No') }}</th>
                         <th>{{ __('Member') }}</th>
                         <th>{{ __('Department') }}</th>
+                        <th class="text-center">{{ __('Start Date') }}</th>
+                        <th class="text-center">{{ __('End Date') }}</th>
                         <th class="text-center">{{ __('Action') }}</th>
                     </tr>
                 </thead>
@@ -32,6 +34,8 @@
                                 <td class="text-center">{{ $perpage * ($current_page - 1) + $loop->iteration }}</td>
                                 <td>{{ $transition->member->name }}</td>
                                 <td>{{ $transition->department->name }}</td>
+                                <td class="text-center">{{ $transition->start_date }}</td>
+                                <td class="text-center">{{ $transition->end_date }}</td>
                                 <td class="d-flex align-item-center justify-content-center">
                                     <a href="{{ route('admin.transitions.edit', $transition) }}">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">

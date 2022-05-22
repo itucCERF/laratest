@@ -5,9 +5,10 @@ namespace App\Traits;
 use App\Models\Permission;
 use App\Models\Role;
 
-trait HasPermissionsTrait {
+trait HasPermissionsTrait
+{
 
-    public function givePermissionsTo( ... $permissions )
+    public function givePermissionsTo(...$permissions)
     {
         $permissions = $this->getAllPermissions($permissions);
         if ($permissions === null) {
@@ -17,14 +18,14 @@ trait HasPermissionsTrait {
         return $this;
     }
 
-    public function withdrawPermissionsTo( ... $permissions )
+    public function withdrawPermissionsTo(...$permissions)
     {
         $permissions = $this->getAllPermissions($permissions);
         $this->permissions()->detach($permissions);
         return $this;
     }
 
-    public function refreshPermissions( ... $permissions )
+    public function refreshPermissions(...$permissions)
     {
         $this->permissions()->detach();
         return $this->givePermissionsTo($permissions);
@@ -37,7 +38,7 @@ trait HasPermissionsTrait {
 
     public function hasPermissionThroughRole($permission)
     {
-        foreach ($permission->roles as $role){
+        foreach ($permission->roles as $role) {
             if ($this->roles->contains($role)) {
                 return true;
             }
@@ -45,7 +46,7 @@ trait HasPermissionsTrait {
         return false;
     }
 
-    public function hasRole( ... $roles )
+    public function hasRole(...$roles)
     {
 
         foreach ($roles as $role) {
@@ -75,5 +76,4 @@ trait HasPermissionsTrait {
     {
         return Permission::whereIn('slug', $permissions)->get();
     }
-
 }

@@ -17,6 +17,7 @@
                     <tr>
                         <th class="text-center">{{ __('No') }}</th>
                         <th>{{ __('Name') }}</th>
+                        <th class="text-center">{{ __('Total Member') }}</th>
                         <th>{{ __('Address') }}</th>
                         <th class="text-center">{{ __('Action') }}</th>
                     </tr>
@@ -31,6 +32,7 @@
                             <tr>
                                 <td class="text-center">{{ $perpage * ($current_page - 1) + $loop->iteration }}</td>
                                 <td>{{ $department->name }}</td>
+                                <td class="text-center">{{ $department->transitions_count }}</td>
                                 <td>{{ $department->Address }}</td>
                                 <td class="d-flex align-item-center justify-content-center">
                                     <a href="{{ route('admin.departments.edit', $department) }}">

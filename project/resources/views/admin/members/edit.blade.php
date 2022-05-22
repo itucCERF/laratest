@@ -50,7 +50,10 @@
                 <div class="upload_media">
                     <x-input id="profile" class="mt-1" type="file" name="profile"
                     accept="image/gif, image/png, image/jpeg" onchange="readURL(this);" />
-                    <img id="show_image" src="{{ asset('storage/'.$member->profile) }}" alt="{{ __('Your Image') }}" />
+                    <img
+                        id="show_image"
+                        src="{{ $member->profile ? asset('storage/'.$member->profile) : asset('images/no_image.jpg') }}"
+                        alt="{{ __('Your Image') }}" />
                 </div>
             </div>
             <div class="mb-3">

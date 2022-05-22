@@ -54,7 +54,10 @@
                 <div class="upload_media">
                     <x-input id="profile" class="mt-1" type="file" name="decided_img"
                     accept="image/gif, image/png, image/jpeg" onchange="readURL(this);" />
-                    <img id="show_image" src="{{ asset('storage/'.$transition->decided_img) }}" alt="{{ __('Your Image') }}" />
+                    <img
+                        id="show_image"
+                        src="{{ $transition->decided_img ? asset('storage/'.$transition->decided_img) : asset('images/no_image.jpg') }}"
+                        alt="{{ __('Your Image') }}" />
                 </div>
             </div>
             <div class="text-end">

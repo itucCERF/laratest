@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Transition;
 use App\Traits\Media;
+use App\Traits\TransitionTrait;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreTransitionRequest;
 use App\Http\Requests\UpdateTransitionRequest;
 
 class TransitionController extends Controller
 {
-    use Media;
+    use Media, TransitionTrait;
 
     /**
      * Display a listing of the resource.
@@ -20,7 +21,7 @@ class TransitionController extends Controller
     public function index()
     {
         return view('admin.transitions.index', [
-            'transitions' => Transition::paginate(config('constant.common_values.paginate_default'))
+            'transitions' => Transition::paginate(config('constant.common_values.paginate_default')),
         ]);
     }
 
@@ -42,19 +43,25 @@ class TransitionController extends Controller
      */
     public function store(StoreTransitionRequest $request)
     {
-        $url_profile = '';
-        if ($file = $request->file('decided_img')) {
-            $url_profile = $this->saveFile($file);
+        $custom_validate = $this->validateTransitionPeriodTime($request);
+        if ($custom_validate === true) {
+            $url_profile = '';
+            if ($file = $request->file('decided_img')) {
+                $url_profile = $this->saveFile($file);
+            }
+            $transition = Transition::create([
+                'member_id' => $request->member_id,
+                'department_id' => $request->department_id,
+                'user_id' => Auth::id(),
+                'decided_img' => $url_profile,
+                'start_date' => $request->start_date,
+                'end_date' => $request->end_date,
+            ]);
+            $message = $this->updateEndDateNearestTransition($transition);
+            return redirect()->back()->with('status', 'Transition has been create successfully!' . $message);
+        } else {
+            return $custom_validate;
         }
-        $transition = Transition::create([
-            'member_id' => $request->member_id,
-            'department_id' => $request->department_id,
-            'user_id' => Auth::id(),
-            'decided_img' => $url_profile,
-            'start_date' => $request->start_date,
-            'end_date' => $request->end_date,
-        ]);
-        return redirect()->back()->with('status', 'Transition has been create successfully!');
     }
 
     /**
@@ -95,16 +102,21 @@ class TransitionController extends Controller
         $transition->user_id = Auth::id();
         $transition->start_date = $request->start_date;
         $transition->end_date = $request->end_date;
-        if ($file = $request->file('decided_img')) {
-            $this->deleteOldFile($transition->decided_img);
-            $transition->decided_img = $this->saveFile($file);
-        }
-        if($transition->isDirty()){
-            $transition->save();
-            return redirect()->route('admin.transitions.edit', $transition)
-                ->with('status', 'Transition has been update successfully!');
+        $custom_validate = $this->validateTransitionPeriodTime($request, $transition->id);
+        if ($custom_validate === true) {
+            if ($file = $request->file('decided_img')) {
+                $this->deleteOldFile($transition->decided_img);
+                $transition->decided_img = $this->saveFile($file);
+            }
+            if ($transition->isDirty()) {
+                $transition->save();
+                return redirect()->route('admin.transitions.edit', $transition)
+                    ->with('status', 'Transition has been update successfully!');
+            } else {
+                return redirect()->route('admin.transitions.edit', $transition);
+            }
         } else {
-            return redirect()->route('admin.transitions.edit', $transition);
+            return $custom_validate;
         }
     }
 

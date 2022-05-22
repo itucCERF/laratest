@@ -19,7 +19,7 @@ class MemberController extends Controller
     public function index()
     {
         return view('admin.members.index', [
-            'members' => Member::paginate(config('constant.common_values.paginate_default'))
+            'members' => Member::paginate(config('constant.common_values.paginate_default')),
         ]);
     }
 
@@ -45,16 +45,18 @@ class MemberController extends Controller
         if ($file = $request->file('profile')) {
             $url_profile = $this->saveFile($file);
         }
-        $member = Member::create([
-            'name' => $request->name,
-            'gender' => $request->gender,
-            'email' => $request->email,
-            'birthday' => $request->birthday,
-            'address' => $request->address,
-            'profile' => $url_profile,
-            'id_card' => $request->id_card,
-            'notes' => $request->notes,
-        ]);
+        $member = Member::create(
+            [
+                'name' => $request->name,
+                'gender' => $request->gender,
+                'email' => $request->email,
+                'birthday' => $request->birthday,
+                'address' => $request->address,
+                'profile' => $url_profile,
+                'id_card' => $request->id_card,
+                'notes' => $request->notes,
+            ]
+        );
         return redirect()->back()->with('status', 'Member has been created successfully!');
     }
 
@@ -102,7 +104,7 @@ class MemberController extends Controller
             $this->deleteOldFile($member->profile);
             $member->profile = $this->saveFile($file);
         }
-        if($member->isDirty()){
+        if ($member->isDirty()) {
             $member->save();
             return redirect()->route('admin.members.edit', $member)
                 ->with('status', 'Member has been updated successfully!');
